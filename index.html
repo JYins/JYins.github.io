@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeremy Yin — Software Engineer | Robotics & AI</title>
+<meta name="description" content="Jeremy (Shi) Yin — Software Engineer specializing in Robotics, AI Perception, and Backend Systems. M.Eng Robotics & Control @ Western.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Reset & Variables ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-card-hover: #1a1a26;
+  --text: #e8e6e3;
+  --text-dim: #8a8a9a;
+  --accent: #4af0c0;
+  --accent-dim: rgba(74, 240, 192, 0.12);
+  --accent2: #6366f1;
+  --border: rgba(255,255,255,0.06);
+  --radius: 16px;
+  --font-display: 'Space Mono', monospace;
+  --font-body: 'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== Noise overlay ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+/* ===== Grid background ===== */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== Glow orbs ===== */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-1 { width: 500px; height: 500px; background: rgba(74,240,192,0.06); top: -150px; right: -100px; }
+.orb-2 { width: 400px; height: 400px; background: rgba(99,102,241,0.06); bottom: 10%; left: -100px; }
+
+/* ===== Nav ===== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(20px);
+  background: rgba(10,10,15,0.7);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+}
+nav.scrolled { padding: 0.8rem 2rem; }
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ===== Sections ===== */
+section {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ===== Hero ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 80px;
+}
+.hero-label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero h1 {
+  font-family: var(--font-body);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -2px;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+.hero h1 .highlight {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--text-dim);
+  max-width: 600px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+.hero-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
+.hero-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 100px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+.btn-primary:hover { box-shadow: 0 0 30px rgba(74,240,192,0.3); transform: translateY(-2px); }
+.btn-outline {
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: transparent;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: fadeUp 0.8s 1.2s forwards;
+}
+.scroll-indicator span {
+  display: block;
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  margin: 0 auto;
+  animation: scrollPulse 2s infinite;
+}
+
+/* ===== Section headings ===== */
+.section-header {
+  margin-bottom: 3rem;
+  padding-top: 6rem;
+}
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+/* ===== Reveal animation ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Skills grid ===== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+.skill-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(74,240,192,0.15); }
+.skill-card:hover::before { transform: scaleX(1); }
+.skill-card h3 {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.skill-card p {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ===== Experience timeline ===== */
+.timeline { position: relative; padding-left: 2rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+  padding-left: 1.5rem;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -2.35rem; top: 8px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(74,240,192,0.4);
+}
+.timeline-date {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+  margin-bottom: 0.4rem;
+}
+.timeline-role {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.timeline-company {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 0.8rem;
+}
+.timeline-desc {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+.tag {
+  font-size: 0.72rem;
+  font-family: var(--font-display);
+  padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+
+/* ===== Projects grid ===== */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+.project-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(74,240,192,0.2); }
+.project-status {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-family: var(--font-display);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+.status-live { background: rgba(74,240,192,0.12); color: var(--accent); }
+.status-wip { background: rgba(99,102,241,0.12); color: var(--accent2); }
+.project-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+.project-card p {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: gap 0.3s;
+}
+.project-link:hover { gap: 0.7rem; }
+.project-link svg { width: 16px; height: 16px; }
+
+/* ===== Education ===== */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.edu-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: all 0.3s;
+}
+.edu-card:hover { border-color: rgba(74,240,192,0.15); }
+.edu-degree {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.edu-school {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 0.8rem;
+}
+.edu-courses {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.edu-courses span {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+/* ===== Contact ===== */
+.contact-section {
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+}
+.contact-section h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 1rem;
+}
+.contact-section p {
+  font-size: 1rem;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.contact-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+.contact-links a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+  nav { padding: 1rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 0.75rem; }
+  .hero h1 { letter-spacing: -1px; }
+  .hero-sub { font-size: 1rem; }
+  section { padding: 0 1.2rem; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .scroll-indicator { display: none; }
+}
+@media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- Nav -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">J.YIN</a>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-label">Software Engineer &mdash; Robotics &amp; AI</div>
+  <h1>Hi, I'm <span class="highlight">Jeremy Yin</span>.<br>I build systems that<br>perceive &amp; reason.</h1>
+  <p class="hero-sub">M.Eng Robotics &amp; Control @ Western &bull; B.Sc CS @ UAlberta<br>V2V autonomous driving perception &bull; Backend systems &bull; ML evaluation pipelines</p>
+  <div class="hero-links">
+    <a href="mailto:syin94@uwo.ca" class="btn-primary">Get in Touch &rarr;</a>
+    <a href="https://github.com/JYins" class="btn-outline" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/jeremy-shi-yin-3a790437b/" class="btn-outline" target="_blank">LinkedIn</a>
+  </div>
+  <div class="scroll-indicator"><span></span></div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-label">01 &mdash; Skills</div>
+    <h2 class="section-title">What I work with</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <h3>Languages</h3>
+      <p>Python &bull; C++ &bull; SQL &bull; Java &bull; MATLAB &bull; Swift</p>
+    </div>
+    <div class="skill-card reveal">
+      <h3>ML / AI</h3>
+      <p>PyTorch &bull; scikit-learn &bull; LangChain &bull; RAG pipelines &bull; Vector search &bull; FAISS &bull; Retrieval evaluation</p>
+    </div>
+    <div class="skill-card reveal">
+      <h3>Backend / Data</h3>
+      <p>REST APIs &bull; Spring Boot &bull; MySQL &bull; Firebase &bull; Schema design &bull; Data pipelines &bull; Streamlit</p>
+    </div>
+    <div class="skill-card reveal">
+      <h3>Systems / Tools</h3>
+      <p>Linux &bull; Docker &bull; Git &bull; GitHub Actions &bull; ROS2 &bull; HPC &bull; CMake</p>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience">
+  <div class="section-header reveal">
+    <div class="section-label">02 &mdash; Experience</div>
+    <h2 class="section-title">Where I've built things</h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-date">Jan 2026 &mdash; Present</div>
+      <div class="timeline-role">Graduate Research Assistant</div>
+      <div class="timeline-company">University of Western Ontario &bull; Supervisor: Dr. Fadi AlMahamid</div>
+      <p class="timeline-desc">Building deep generative models (U-Net, Pix2Pix, conditional diffusion) for LiDAR occlusion reconstruction in V2V cooperative perception. Designed reproducible PyTorch training pipelines on V2V4Real (240K 3D labels, 20K LiDAR frames) with evaluation metrics (IoU, SSIM, PSNR) on national HPC infrastructure.</p>
+      <div class="timeline-tags">
+        <span class="tag">PyTorch</span><span class="tag">LiDAR</span><span class="tag">BEV</span><span class="tag">HPC</span><span class="tag">V2V Perception</span><span class="tag">Deep Generative Models</span>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-date">Jun 2024 &mdash; Aug 2024</div>
+      <div class="timeline-role">Algorithm / LLM Research Intern</div>
+      <div class="timeline-company">SmartEarth (Digital Twin / Geo-Data) &bull; Beijing, China</div>
+      <p class="timeline-desc">Evaluated 6 RAG retrieval configurations across 50+ geo-domain documents. Catalogued 4 categories of retrieval failure modes and proposed mitigation strategies adopted by the internal knowledge-base team. Documented configuration trade-offs to guide production pipeline decisions.</p>
+      <div class="timeline-tags">
+        <span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">Vector Search</span><span class="tag">LLM</span><span class="tag">Evaluation</span>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-date">Apr 2024 &mdash; Jun 2024</div>
+      <div class="timeline-role">Research Project &mdash; Pathfinding</div>
+      <div class="timeline-company">Mentored by Prof. Fumiya Iida &bull; University of Cambridge</div>
+      <p class="timeline-desc">Benchmarked A* and Dijkstra on 30 grid-map instances. A* expanded 50% fewer nodes and ran 40% faster on complex scenarios. Authored technical report on heuristic overhead vs. search efficiency.</p>
+      <div class="timeline-tags">
+        <span class="tag">A*</span><span class="tag">MATLAB/Simulink</span><span class="tag">Benchmarking</span><span class="tag">Path Planning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-label">03 &mdash; Projects</div>
+    <h2 class="section-title">What I've shipped</h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <span class="project-status status-wip">In Progress</span>
+      <h3>RAG Evaluation Pipeline</h3>
+      <p>End-to-end evaluation framework for RAG systems. Comparing chunking strategies, embedding models, and retrieval methods with automated metrics (Recall@K, MRR) and regression testing via pytest + GitHub Actions CI.</p>
+      <div class="timeline-tags" style="margin-bottom:1rem">
+        <span class="tag">Python</span><span class="tag">FAISS</span><span class="tag">RAGAS</span><span class="tag">Streamlit</span><span class="tag">pytest</span>
+      </div>
+      <a href="https://github.com/JYins" class="project-link" target="_blank">View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+    </div>
+    <div class="project-card reveal">
+      <span class="project-status status-wip">In Progress</span>
+      <h3>ROS2 LiDAR Perception Demo</h3>
+      <p>ROS2 perception pipeline with LiDAR point-cloud playback, BEV projection, object detection, and RViz2 visualization. Containerized with Docker, includes logging and latency profiling.</p>
+      <div class="timeline-tags" style="margin-bottom:1rem">
+        <span class="tag">ROS2</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">LiDAR</span>
+      </div>
+      <a href="https://github.com/JYins" class="project-link" target="_blank">View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+    </div>
+    <div class="project-card reveal">
+      <span class="project-status status-live">Shipped</span>
+      <h3>Racing Car Rental System</h3>
+      <p>Full-stack web application with Spring Boot backend, MySQL (schema design + indexing), Vue.js frontend, token-based auth, RESTful APIs for fleet/order/payment, and analytics dashboard.</p>
+      <div class="timeline-tags" style="margin-bottom:1rem">
+        <span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag">Vue.js</span><span class="tag">REST API</span>
+      </div>
+      <a href="https://github.com/JYins/Fall20225-ECE9014-Final-project" class="project-link" target="_blank">View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+    </div>
+    <div class="project-card reveal">
+      <span class="project-status status-live">Shipped</span>
+      <h3>DanielApp</h3>
+      <p>iOS app for daily multilingual content delivery. SwiftUI + WidgetKit with scheduled timeline refresh, Firebase backend for auth, data sync, and admin content management.</p>
+      <div class="timeline-tags" style="margin-bottom:1rem">
+        <span class="tag">Swift</span><span class="tag">SwiftUI</span><span class="tag">Firebase</span><span class="tag">WidgetKit</span>
+      </div>
+      <a href="https://github.com/JYins/Danielandfriends" class="project-link" target="_blank">View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- Education -->
+<section id="education">
+  <div class="section-header reveal">
+    <div class="section-label">04 &mdash; Education</div>
+    <h2 class="section-title">Where I studied</h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-degree">M.Eng. Electrical &amp; Computer Engineering</div>
+      <div class="edu-school">University of Western Ontario &bull; Robotics &amp; Control &bull; Dec 2026</div>
+      <div class="edu-courses">
+        <span>Key Courses</span>
+        Robot Manipulators &bull; Autonomous Robotics &bull; Sensor Networks &amp; Embedded Systems &bull; Linear Systems &amp; Modern Control &bull; Advanced Digital Control
+      </div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">B.Sc. with Specialization in Computing Science</div>
+      <div class="edu-school">University of Alberta &bull; Apr 2025</div>
+      <div class="edu-courses">
+        <span>Key Courses</span>
+        Natural Language Processing &bull; Machine Learning &bull; Information Retrieval &bull; Search &amp; Planning in AI &bull; Reinforcement Learning &bull; Database Management
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="contact-section reveal">
+  <h2>Let's build<br>something <span class="highlight">together</span>.</h2>
+  <p>I'm actively looking for Summer / Fall 2026 internships and new grad roles in Canada. Open to Software Engineering, Robotics, Perception, and Data/ML opportunities.</p>
+  <div class="contact-links">
+    <a href="mailto:syin94@uwo.ca">&#9993; syin94@uwo.ca</a>
+    <a href="https://www.linkedin.com/in/jeremy-shi-yin-3a790437b/" target="_blank">LinkedIn &rarr;</a>
+    <a href="https://github.com/JYins" target="_blank">GitHub &rarr;</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Jeremy (Shi) Yin. Built with care.</p>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// Nav scroll effect
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Smooth anchor scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
