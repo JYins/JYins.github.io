@@ -1,739 +1,883 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jeremy Yin 鈥?Software Engineer | Robotics & AI</title>
-<meta name="description" content="Jeremy (Shi) Yin 鈥?Software Engineer specializing in Robotics, AI Perception, and Backend Systems. M.Eng Robotics & Control @ Western.">
+<title>Jeremy Yin | Robotics, Perception, and AI Systems</title>
+<meta name="description" content="Jeremy Yin builds robotics and perception systems, evaluates RAG pipelines rigorously, and ships practical backend and product software.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ===== Reset & Variables ===== */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --bg: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-card-hover: #1a1a26;
-  --text: #e8e6e3;
-  --text-dim: #8a8a9a;
-  --accent: #4af0c0;
-  --accent-dim: rgba(74, 240, 192, 0.12);
-  --accent2: #6366f1;
-  --border: rgba(255,255,255,0.06);
-  --radius: 16px;
-  --font-display: 'Space Mono', monospace;
-  --font-body: 'Outfit', sans-serif;
-}
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  color: #f4efe7;
+  background:
+    radial-gradient(circle at top left, rgba(255, 152, 102, 0.18), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(78, 214, 195, 0.16), transparent 24%),
+    linear-gradient(180deg, #10161d 0%, #151d25 42%, #0e1318 100%);
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
-/* ===== Noise overlay ===== */
 body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-}
-
-/* ===== Scrollbar ===== */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
-
-/* ===== Grid background ===== */
-.grid-bg {
+  content: "";
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.35;
   pointer-events: none;
   z-index: 0;
 }
 
-/* ===== Glow orbs ===== */
-.orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(120px);
-  pointer-events: none;
-  z-index: 0;
-}
-.orb-1 { width: 500px; height: 500px; background: rgba(74,240,192,0.06); top: -150px; right: -100px; }
-.orb-2 { width: 400px; height: 400px; background: rgba(99,102,241,0.06); bottom: 10%; left: -100px; }
+a { color: inherit; }
 
-/* ===== Nav ===== */
+:root {
+  --bg-card: rgba(13, 18, 24, 0.72);
+  --border: rgba(255, 255, 255, 0.1);
+  --text-dim: #b2b3b0;
+  --accent: #52dbc7;
+  --accent-2: #ffae6b;
+  --accent-soft: rgba(82, 219, 199, 0.12);
+  --shadow: 0 18px 80px rgba(0, 0, 0, 0.28);
+  --radius: 22px;
+  --mono: "IBM Plex Mono", monospace;
+}
+
 nav {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 1.2rem 2rem;
+  z-index: 30;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  backdrop-filter: blur(20px);
-  background: rgba(10,10,15,0.7);
-  border-bottom: 1px solid var(--border);
-  transition: all 0.3s;
+  padding: 1rem 1.5rem;
+  backdrop-filter: blur(18px);
+  background: rgba(10, 14, 19, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
-nav.scrolled { padding: 0.8rem 2rem; }
-.nav-logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--accent);
-  text-decoration: none;
-  letter-spacing: -0.5px;
-}
-.nav-links { display: flex; gap: 2rem; }
-.nav-links a {
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  transition: color 0.3s;
-  position: relative;
-}
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--accent);
-  transition: width 0.3s;
-}
-.nav-links a:hover { color: var(--accent); }
-.nav-links a:hover::after { width: 100%; }
 
-/* ===== Sections ===== */
-section {
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+}
+
+.nav-links a:hover { color: #ffffff; }
+
+main,
+footer {
   position: relative;
   z-index: 1;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 2rem;
 }
 
-/* ===== Hero ===== */
+section {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
 .hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  gap: 2rem;
+  align-items: end;
+  min-height: calc(100vh - 72px);
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
-.hero-label {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  color: var(--accent);
-  letter-spacing: 3px;
+
+.eyebrow,
+.section-kicker {
+  font-family: var(--mono);
+  font-size: 0.74rem;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.2s forwards;
+  letter-spacing: 0.18em;
+  color: var(--accent);
 }
+
 .hero h1 {
-  font-family: var(--font-body);
-  font-size: clamp(2.8rem, 6vw, 5rem);
-  font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -2px;
-  margin-bottom: 1.5rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.4s forwards;
+  margin: 1rem 0 1.25rem;
+  font-size: clamp(3.2rem, 7vw, 6.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  max-width: 8.5ch;
 }
-.hero h1 .highlight {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+
+.hero h1 span {
+  color: var(--accent-2);
 }
-.hero-sub {
-  font-size: 1.15rem;
-  color: var(--text-dim);
-  max-width: 600px;
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.6s forwards;
+
+.hero-copy p {
+  max-width: 38rem;
+  margin: 0 0 1rem;
+  color: #ddd7cd;
+  font-size: 1.06rem;
 }
-.hero-links {
+
+.hero-copy .lead { color: var(--text-dim); }
+
+.hero-actions {
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.8s forwards;
+  gap: 0.9rem;
+  margin-top: 2rem;
 }
-.hero-links a {
+
+.btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 100px;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0.8rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
   text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
+
+.btn:hover { transform: translateY(-2px); }
+
 .btn-primary {
-  background: var(--accent);
-  color: var(--bg);
-}
-.btn-primary:hover { box-shadow: 0 0 30px rgba(74,240,192,0.3); transform: translateY(-2px); }
-.btn-outline {
-  border: 1px solid var(--border);
-  color: var(--text);
-  background: transparent;
-}
-.btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-
-.scroll-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  animation: fadeUp 0.8s 1.2s forwards;
-}
-.scroll-indicator span {
-  display: block;
-  width: 2px;
-  height: 40px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  margin: 0 auto;
-  animation: scrollPulse 2s infinite;
-}
-
-/* ===== Section headings ===== */
-.section-header {
-  margin-bottom: 3rem;
-  padding-top: 6rem;
-}
-.section-label {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  color: var(--accent);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.section-title {
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  background: linear-gradient(135deg, var(--accent), #96f0df);
+  color: #081014;
   font-weight: 700;
-  letter-spacing: -1px;
 }
 
-/* ===== Reveal animation ===== */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.7s, transform 0.7s;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border);
+  color: #f4efe7;
 }
 
-/* ===== Skills grid ===== */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
-}
-.skill-card {
+.hero-panel,
+.glass-card,
+.project-card,
+.experience-card,
+.education-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.hero-panel {
   padding: 1.5rem;
-  transition: all 0.4s;
+  align-self: center;
+}
+
+.hero-panel h2 {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: #fff7ea;
+}
+
+.hero-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-item {
+  padding: 1rem 1rem 0.95rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.hero-item strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent-2);
+}
+
+.hero-item span {
+  color: var(--text-dim);
+  font-size: 0.94rem;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1.6rem;
+}
+
+.section-title {
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.8rem, 4vw, 2.9rem);
+  letter-spacing: -0.04em;
+}
+
+.section-note {
+  max-width: 28rem;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.trajectory,
+.featured,
+.experience,
+.skills,
+.education,
+.contact {
+  padding-top: 1rem;
+}
+
+.trajectory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.glass-card {
+  padding: 1.3rem;
   position: relative;
   overflow: hidden;
 }
-.skill-card::before {
-  content: '';
+
+.glass-card::before {
+  content: "";
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s;
-}
-.skill-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(74,240,192,0.15); }
-.skill-card:hover::before { transform: scaleX(1); }
-.skill-card h3 {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  color: var(--accent);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-.skill-card p {
-  font-size: 0.9rem;
-  color: var(--text-dim);
-  line-height: 1.6;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
 }
 
-/* ===== Experience timeline ===== */
-.timeline { position: relative; padding-left: 2rem; }
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
-}
-.timeline-item {
-  position: relative;
-  margin-bottom: 2.5rem;
-  padding-left: 1.5rem;
-}
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: -2.35rem; top: 8px;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(74,240,192,0.4);
-}
 .timeline-date {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  color: var(--accent);
-  letter-spacing: 1px;
-  margin-bottom: 0.4rem;
-}
-.timeline-role {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.2rem;
-}
-.timeline-company {
-  font-size: 0.9rem;
-  color: var(--text-dim);
-  margin-bottom: 0.8rem;
-}
-.timeline-desc {
-  font-size: 0.9rem;
-  color: var(--text-dim);
-  line-height: 1.7;
-}
-.timeline-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.8rem;
-}
-.tag {
+  display: inline-block;
+  margin-bottom: 0.7rem;
+  font-family: var(--mono);
   font-size: 0.72rem;
-  font-family: var(--font-display);
-  padding: 0.3rem 0.7rem;
-  border-radius: 100px;
-  background: var(--accent-dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--accent);
-  letter-spacing: 0.5px;
 }
 
-/* ===== Projects grid ===== */
+.glass-card h3,
+.project-card h3,
+.experience-card h3,
+.education-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.08rem;
+}
+
+.glass-card p,
+.project-card p,
+.experience-card p,
+.education-card p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.project-group {
+  margin-bottom: 2.25rem;
+}
+
+.group-title {
+  margin: 0 0 1rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem;
-}
-.project-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 2rem;
-  transition: all 0.4s;
-  position: relative;
-  overflow: hidden;
-}
-.project-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); border-color: rgba(74,240,192,0.2); }
-.project-status {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-family: var(--font-display);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 0.25rem 0.6rem;
-  border-radius: 100px;
-  margin-bottom: 1rem;
-}
-.status-live { background: rgba(74,240,192,0.12); color: var(--accent); }
-.status-wip { background: rgba(99,102,241,0.12); color: var(--accent2); }
-.project-card h3 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin-bottom: 0.6rem;
-}
-.project-card p {
-  font-size: 0.88rem;
-  color: var(--text-dim);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-.project-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 500;
-  transition: gap 0.3s;
-}
-.project-link:hover { gap: 0.7rem; }
-.project-link svg { width: 16px; height: 16px; }
-
-/* ===== Education ===== */
-.edu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-.edu-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 2rem;
-  transition: all 0.3s;
-}
-.edu-card:hover { border-color: rgba(74,240,192,0.15); }
-.edu-degree {
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-}
-.edu-school {
-  font-size: 0.9rem;
-  color: var(--text-dim);
-  margin-bottom: 0.8rem;
-}
-.edu-courses {
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  line-height: 1.6;
-}
-.edu-courses span {
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  color: var(--accent);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 0.3rem;
-}
-
-/* ===== Contact ===== */
-.contact-section {
-  text-align: center;
-  padding: 6rem 2rem 4rem;
-}
-.contact-section h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  letter-spacing: -1px;
-  margin-bottom: 1rem;
-}
-.contact-section p {
-  font-size: 1rem;
-  color: var(--text-dim);
-  margin-bottom: 2rem;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.contact-links {
-  display: flex;
-  justify-content: center;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  flex-wrap: wrap;
 }
-.contact-links a {
+
+.project-card {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.project-badge {
   display: inline-flex;
   align-items: center;
+  padding: 0.24rem 0.7rem;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.badge-research { background: var(--accent-soft); color: var(--accent); border-color: rgba(82, 219, 199, 0.2); }
+.badge-progress { background: rgba(147, 197, 253, 0.1); color: #9fd2ff; border-color: rgba(159, 210, 255, 0.18); }
+.badge-unshipped { background: rgba(255, 174, 107, 0.1); color: #ffc48f; border-color: rgba(255, 196, 143, 0.18); }
+.badge-shipped { background: rgba(122, 245, 168, 0.1); color: #b7ffca; border-color: rgba(183, 255, 202, 0.18); }
+.badge-beta { background: rgba(248, 113, 113, 0.1); color: #ffb2b2; border-color: rgba(255, 178, 178, 0.18); }
+.badge-project { background: rgba(255, 255, 255, 0.06); color: #e4ddd2; border-color: rgba(255, 255, 255, 0.1); }
+
+.project-tags,
+.experience-tags,
+.skill-list,
+.edu-tags {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  padding: 0.8rem 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  color: var(--text);
+}
+
+.chip {
+  padding: 0.28rem 0.62rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e7e0d7;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+}
+
+.project-link {
+  margin-top: auto;
   text-decoration: none;
-  font-size: 0.9rem;
-  transition: all 0.3s;
+  color: var(--accent);
+  font-weight: 600;
 }
-.contact-links a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-/* ===== Footer ===== */
-footer {
-  text-align: center;
-  padding: 2rem;
-  font-size: 0.8rem;
+.experience-grid,
+.skills-grid,
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.experience-card,
+.education-card {
+  padding: 1.4rem;
+}
+
+.experience-meta,
+.education-meta {
+  margin-bottom: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.skill-card {
+  padding: 1.3rem;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.skill-card h3 {
+  margin: 0 0 0.8rem;
+  font-size: 0.95rem;
+}
+
+.skill-list .chip {
+  background: rgba(255, 174, 107, 0.08);
+}
+
+.contact {
+  padding-bottom: 2rem;
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 1.2rem;
+  padding: 1.5rem;
+}
+
+.contact-copy p {
+  max-width: 36rem;
   color: var(--text-dim);
-  border-top: 1px solid var(--border);
-  max-width: 1100px;
+}
+
+.contact-links {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.contact-link {
+  padding: 0.95rem 1rem;
+  border-radius: 18px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contact-link strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+footer {
+  max-width: 1180px;
   margin: 0 auto;
+  padding: 0 1.5rem 2.5rem;
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  position: relative;
+  z-index: 1;
 }
 
-/* ===== Animations ===== */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
-  50% { opacity: 1; transform: scaleY(1); }
+@media (max-width: 1060px) {
+  .hero,
+  .contact-card,
+  .trajectory-grid,
+  .projects-grid,
+  .experience-grid,
+  .skills-grid,
+  .education-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .trajectory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .contact-card { grid-template-columns: 1fr; }
 }
 
-/* ===== Mobile ===== */
-@media (max-width: 768px) {
-  nav { padding: 1rem; }
-  .nav-links { gap: 1rem; }
-  .nav-links a { font-size: 0.75rem; }
-  .hero h1 { letter-spacing: -1px; }
-  .hero-sub { font-size: 1rem; }
-  section { padding: 0 1.2rem; }
-  .skills-grid { grid-template-columns: 1fr 1fr; }
-  .projects-grid { grid-template-columns: 1fr; }
-  .scroll-indicator { display: none; }
-}
-@media (max-width: 480px) {
-  .skills-grid { grid-template-columns: 1fr; }
-  .nav-links { gap: 0.7rem; }
+@media (max-width: 760px) {
+  nav {
+    align-items: start;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .hero,
+  .trajectory-grid,
+  .projects-grid,
+  .experience-grid,
+  .skills-grid,
+  .education-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero { min-height: auto; padding-top: 2.5rem; }
+  .hero h1 { max-width: none; }
+  .section-head { flex-direction: column; align-items: start; }
 }
 </style>
 </head>
 <body>
-
-<div class="grid-bg"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-
-<!-- Nav -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">J.YIN</a>
+<nav>
+  <a class="nav-logo" href="#top">Jeremy Yin</a>
   <div class="nav-links">
-    <a href="#skills">Skills</a>
+    <a href="#trajectory">Trajectory</a>
+    <a href="#featured">Featured Work</a>
     <a href="#experience">Experience</a>
-    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
     <a href="#education">Education</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-label">Software Engineer &mdash; Robotics &amp; AI</div>
-  <h1>Hi, I'm <span class="highlight">Jeremy Yin</span>.<br>I build systems that<br>perceive &amp; reason.</h1>
-  <p class="hero-sub">M.Eng Robotics &amp; Control @ Western &bull; B.Sc CS @ UAlberta<br>V2V autonomous driving perception &bull; Backend systems &bull; ML evaluation pipelines</p>
-  <div class="hero-links">
-    <a href="mailto:syin94@uwo.ca" class="btn-primary">Get in Touch &rarr;</a>
-    <a href="https://github.com/JYins" class="btn-outline" target="_blank">GitHub</a>
-    <a href="https://www.linkedin.com/in/jeremy-shi-yin-3a790437b/" class="btn-outline" target="_blank">LinkedIn</a>
-  </div>
-  <div class="scroll-indicator"><span></span></div>
-</section>
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Robotics, Perception, and AI Systems</div>
+      <h1>Building systems that <span>see</span>, evaluate, and ship.</h1>
+      <p>I'm Jeremy Yin, an M.Eng. Robotics & Control student at Western University with a computing background from the University of Alberta.</p>
+      <p class="lead">My strongest line is robotics perception: V2V LiDAR, BEV reconstruction, reproducible PyTorch pipelines, and evaluation that I can actually trust. Around that, I build RAG evaluation tooling, backend systems, and product software that makes the engineering legible.</p>
+      <p class="lead">Looking for Summer/Fall 2026 internships and new grad roles in Software Engineering, Robotics, Perception, or Data/ML in Canada.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:yshi54188@gmail.com">Email me</a>
+        <a class="btn btn-secondary" href="https://github.com/JYins" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="btn btn-secondary" href="https://www.linkedin.com/in/jeremy-shi-yin-3a790437b/" target="_blank" rel="noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <aside class="hero-panel">
+      <h2>Current image</h2>
+      <div class="hero-list">
+        <div class="hero-item">
+          <strong>Perception research</strong>
+          <span>V2V cooperative perception, occluded BEV reconstruction, LiDAR preprocessing, metrics, and HPC training.</span>
+        </div>
+        <div class="hero-item">
+          <strong>Evaluation-minded AI</strong>
+          <span>SmartEarth internship lessons turned into retrieval benchmarking and then application-layer memory systems.</span>
+        </div>
+        <div class="hero-item">
+          <strong>Software that ships</strong>
+          <span>Spring Boot backend work, real-time game systems, and shipped iOS/Firebase app work.</span>
+        </div>
+      </div>
+    </aside>
+  </section>
 
-<!-- Skills -->
-<section id="skills">
-  <div class="section-header reveal">
-    <div class="section-label">01 &mdash; Skills</div>
-    <h2 class="section-title">What I work with</h2>
-  </div>
-  <div class="skills-grid">
-    <div class="skill-card reveal">
-      <h3>Languages</h3>
-      <p>Python &bull; C++ &bull; SQL &bull; Java &bull; MATLAB &bull; Swift</p>
+  <section id="trajectory" class="trajectory">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">Trajectory</div>
+        <h2 class="section-title">A timeline that connects the research and product work.</h2>
+      </div>
+      <p class="section-note">The throughline is not random project hopping. It is one arc: measure systems honestly, understand failure modes, and then build stronger applications on top of that.</p>
     </div>
-    <div class="skill-card reveal">
-      <h3>ML / AI</h3>
-      <p>PyTorch &bull; scikit-learn &bull; LangChain &bull; RAG pipelines &bull; Vector search &bull; FAISS &bull; Retrieval evaluation</p>
+    <div class="trajectory-grid">
+      <article class="glass-card">
+        <div class="timeline-date">Jun 2024-Aug 2024</div>
+        <h3>SmartEarth internship</h3>
+        <p>Evaluated geo-domain RAG retrieval configurations on long documents, identified four concrete retrieval failure modes, and documented trade-offs that informed later work.</p>
+      </article>
+      <article class="glass-card">
+        <div class="timeline-date">2024-2025</div>
+        <h3>rag-eval-pipeline</h3>
+        <p>Turned internship lessons into a reusable evaluation framework for chunking, embeddings, sparse/dense/hybrid retrieval, and failure-case analysis.</p>
+      </article>
+      <article class="glass-card">
+        <div class="timeline-date">Jan 2026-Present</div>
+        <h3>Western V2V research</h3>
+        <p>Built reproducible PyTorch pipelines for cooperative perception on V2V4Real, focusing on occlusion reconstruction, masked occupancy metrics, and fair model comparison.</p>
+      </article>
+      <article class="glass-card">
+        <div class="timeline-date">Current, unshipped</div>
+        <h3>coval</h3>
+        <p>Applying retrieval and memory design to a product-shaped backend for context-rich conversations, with ingestion, person-centric storage, and grounded context assembly.</p>
+      </article>
     </div>
-    <div class="skill-card reveal">
-      <h3>Backend / Data</h3>
-      <p>REST APIs &bull; Spring Boot &bull; MySQL &bull; Firebase &bull; Schema design &bull; Data pipelines &bull; Streamlit</p>
-    </div>
-    <div class="skill-card reveal">
-      <h3>Systems / Tools</h3>
-      <p>Linux &bull; Docker &bull; Git &bull; GitHub Actions &bull; ROS2 &bull; HPC &bull; CMake</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- Experience -->
-<section id="experience">
-  <div class="section-header reveal">
-    <div class="section-label">02 &mdash; Experience</div>
-    <h2 class="section-title">Where I've built things</h2>
-  </div>
-  <div class="timeline">
-    <div class="timeline-item reveal">
-      <div class="timeline-date">Jan 2026 &mdash; Present</div>
-      <div class="timeline-role">Graduate Research Assistant</div>
-      <div class="timeline-company">University of Western Ontario &bull; Supervisor: Dr. Fadi AlMahamid</div>
-      <p class="timeline-desc">Building deep generative models (U-Net, Pix2Pix, conditional diffusion) for LiDAR occlusion reconstruction in V2V cooperative perception. Designed reproducible PyTorch training pipelines on V2V4Real (240K 3D labels, 20K LiDAR frames) with evaluation metrics (IoU, SSIM, PSNR) on national HPC infrastructure.</p>
-      <div class="timeline-tags">
-        <span class="tag">PyTorch</span><span class="tag">LiDAR</span><span class="tag">BEV</span><span class="tag">HPC</span><span class="tag">V2V Perception</span><span class="tag">Deep Generative Models</span>
+  <section id="featured" class="featured">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">Featured Work</div>
+        <h2 class="section-title">Current focus, then selected built work.</h2>
       </div>
+      <p class="section-note">I want the first read to be accurate: perception research first, evaluation-heavy AI systems second, then broader product and backend work that proves range.</p>
     </div>
-    <div class="timeline-item reveal">
-      <div class="timeline-date">Jun 2024 &mdash; Aug 2024</div>
-      <div class="timeline-role">Algorithm / LLM Research Intern</div>
-      <div class="timeline-company">SmartEarth (Digital Twin / Geo-Data) &bull; Beijing, China</div>
-      <p class="timeline-desc">Evaluated 6 RAG retrieval configurations across 50+ geo-domain documents. Catalogued 4 categories of retrieval failure modes and proposed mitigation strategies adopted by the internal knowledge-base team. Documented configuration trade-offs to guide production pipeline decisions.</p>
-      <div class="timeline-tags">
-        <span class="tag">RAG</span><span class="tag">LangChain</span><span class="tag">Vector Search</span><span class="tag">LLM</span><span class="tag">Evaluation</span>
-      </div>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="timeline-date">Apr 2024 &mdash; Jun 2024</div>
-      <div class="timeline-role">Research Project &mdash; Pathfinding</div>
-      <div class="timeline-company">Mentored by Prof. Fumiya Iida &bull; University of Cambridge</div>
-      <p class="timeline-desc">Benchmarked A* and Dijkstra on 30 grid-map instances. A* expanded 50% fewer nodes and ran 40% faster on complex scenarios. Authored technical report on heuristic overhead vs. search efficiency.</p>
-      <div class="timeline-tags">
-        <span class="tag">A*</span><span class="tag">MATLAB/Simulink</span><span class="tag">Benchmarking</span><span class="tag">Path Planning</span>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- Projects -->
-<section id="projects">
-  <div class="section-header reveal">
-    <div class="section-label">03 &mdash; Projects</div>
-    <h2 class="section-title">What I've shipped</h2>
-  </div>
-  <div class="projects-grid">
-    <div class="project-card reveal">
-      <span class="project-status status-wip">In Progress</span>
-      <h3>RAG Evaluation Pipeline</h3>
-      <p>End-to-end evaluation framework for RAG systems. Comparing chunking strategies, embedding models, and retrieval methods with automated metrics (Recall@K, MRR) and regression testing via pytest + GitHub Actions CI.</p>
-      <div class="timeline-tags" style="margin-bottom:1rem">
-        <span class="tag">Python</span><span class="tag">FAISS</span><span class="tag">RAGAS</span><span class="tag">Streamlit</span><span class="tag">pytest</span>
+    <div class="project-group">
+      <h3 class="group-title">Current focus</h3>
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-top">
+            <h3>uwo-v2v-bev-reconstruction</h3>
+            <span class="project-badge badge-research">Research</span>
+          </div>
+          <p>M.Eng. research workspace for V2V cooperative perception: aligned LiDAR-to-BEV inputs, masked-sector reconstruction, metric-driven experiments, and HPC-ready training flows.</p>
+          <div class="project-tags">
+            <span class="chip">Python</span>
+            <span class="chip">PyTorch</span>
+            <span class="chip">LiDAR</span>
+            <span class="chip">BEV</span>
+            <span class="chip">HPC</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/uwo-v2v-bev-reconstruction" target="_blank" rel="noreferrer">View repository</a>
+        </article>
+        <article class="project-card">
+          <div class="project-top">
+            <h3>rag-eval-pipeline</h3>
+            <span class="project-badge badge-progress">In Progress</span>
+          </div>
+          <p>Retrieval evaluation framework comparing chunking strategies, embeddings, and retrieval modes with Recall@K, MRR, dashboard views, CI, and failure-case inspection.</p>
+          <div class="project-tags">
+            <span class="chip">Python</span>
+            <span class="chip">FAISS</span>
+            <span class="chip">ChromaDB</span>
+            <span class="chip">Streamlit</span>
+            <span class="chip">pytest</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/rag-eval-pipeline" target="_blank" rel="noreferrer">View repository</a>
+        </article>
+        <article class="project-card">
+          <div class="project-top">
+            <h3>coval</h3>
+            <span class="project-badge badge-unshipped">Unshipped</span>
+          </div>
+          <p>AI relationship memory backend with FastAPI, PostgreSQL, and person-centric memory design. Early-stage, but intentionally grounded in retrieval lessons from prior evaluation work.</p>
+          <div class="project-tags">
+            <span class="chip">FastAPI</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">Qdrant</span>
+            <span class="chip">RAG</span>
+            <span class="chip">Auth</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/coval" target="_blank" rel="noreferrer">View repository</a>
+        </article>
       </div>
-      <a href="https://github.com/JYins" class="project-link" target="_blank">View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
     </div>
-    <div class="project-card reveal">
-      <span class="project-status status-wip">In Progress</span>
-      <h3>ROS2 LiDAR Perception Demo</h3>
-      <p>ROS2 perception pipeline with LiDAR point-cloud playback, BEV projection, object detection, and RViz2 visualization. Containerized with Docker, includes logging and latency profiling.</p>
-      <div class="timeline-tags" style="margin-bottom:1rem">
-        <span class="tag">ROS2</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">LiDAR</span>
-      </div>
-      <a href="https://github.com/JYins" class="project-link" target="_blank">View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-    </div>
-    <div class="project-card reveal">
-      <span class="project-status status-live">Shipped</span>
-      <h3>Racing Car Rental System</h3>
-      <p>Full-stack web application with Spring Boot backend, MySQL (schema design + indexing), Vue.js frontend, token-based auth, RESTful APIs for fleet/order/payment, and analytics dashboard.</p>
-      <div class="timeline-tags" style="margin-bottom:1rem">
-        <span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag">Vue.js</span><span class="tag">REST API</span>
-      </div>
-      <a href="https://github.com/JYins/RacingCarRentalSystem" class="project-link" target="_blank">View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-    </div>
-    <div class="project-card reveal">
-      <span class="project-status status-live">Shipped</span>
-      <h3>DanielApp</h3>
-      <p>iOS app for daily multilingual content delivery. SwiftUI + WidgetKit with scheduled timeline refresh, Firebase backend for auth, data sync, and admin content management.</p>
-      <div class="timeline-tags" style="margin-bottom:1rem">
-        <span class="tag">Swift</span><span class="tag">SwiftUI</span><span class="tag">Firebase</span><span class="tag">WidgetKit</span>
-      </div>
-      <a href="https://github.com/JYins/DanielApp" class="project-link" target="_blank">View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
-    </div>
-  </div>
-</section>
 
-<!-- Education -->
-<section id="education">
-  <div class="section-header reveal">
-    <div class="section-label">04 &mdash; Education</div>
-    <h2 class="section-title">Where I studied</h2>
-  </div>
-  <div class="edu-grid">
-    <div class="edu-card reveal">
-      <div class="edu-degree">M.Eng. Electrical &amp; Computer Engineering</div>
-      <div class="edu-school">University of Western Ontario &bull; Robotics &amp; Control &bull; Dec 2026</div>
-      <div class="edu-courses">
-        <span>Key Courses</span>
-        Robot Manipulators &bull; Autonomous Robotics &bull; Sensor Networks &amp; Embedded Systems &bull; Linear Systems &amp; Modern Control &bull; Advanced Digital Control
+    <div class="project-group">
+      <h3 class="group-title">Selected built work</h3>
+      <div class="projects-grid">
+        <article class="project-card">
+          <div class="project-top">
+            <h3>510k</h3>
+            <span class="project-badge badge-shipped">Shipped</span>
+          </div>
+          <p>Real-time multiplayer card-game platform with Firebase-backed rooms, bot players, shared TypeScript rules, and a mobile-friendly game flow built around a real offline game.</p>
+          <div class="project-tags">
+            <span class="chip">Next.js</span>
+            <span class="chip">TypeScript</span>
+            <span class="chip">Firebase</span>
+            <span class="chip">Cloud Functions</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/510k" target="_blank" rel="noreferrer">View repository</a>
+        </article>
+        <article class="project-card">
+          <div class="project-top">
+            <h3>RacingCarRentalSystem</h3>
+            <span class="project-badge badge-shipped">Shipped</span>
+          </div>
+          <p>Backend-heavy rental management system with Spring Boot, MySQL schema design, token auth, return processing, and a Vue dashboard for operational workflows.</p>
+          <div class="project-tags">
+            <span class="chip">Spring Boot</span>
+            <span class="chip">MySQL</span>
+            <span class="chip">Vue</span>
+            <span class="chip">REST API</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/RacingCarRentalSystem" target="_blank" rel="noreferrer">View repository</a>
+        </article>
+        <article class="project-card">
+          <div class="project-top">
+            <h3>DanielApp</h3>
+            <span class="project-badge badge-shipped">Shipped</span>
+          </div>
+          <p>Shipped App Store iOS widget app with SwiftUI, WidgetKit, Firebase content flows, and a multilingual experience designed for real community use.</p>
+          <div class="project-tags">
+            <span class="chip">Swift</span>
+            <span class="chip">SwiftUI</span>
+            <span class="chip">WidgetKit</span>
+            <span class="chip">Firebase</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/DanielApp" target="_blank" rel="noreferrer">View repository</a>
+        </article>
+        <article class="project-card">
+          <div class="project-top">
+            <h3>lingosnap-diary</h3>
+            <span class="project-badge badge-beta">Beta</span>
+          </div>
+          <p>Language-learning app concept centered on contextual writing, image-based prompts, and journaling as a more natural path to fluency than rote flashcards.</p>
+          <div class="project-tags">
+            <span class="chip">TypeScript</span>
+            <span class="chip">React</span>
+            <span class="chip">Capacitor</span>
+            <span class="chip">Firebase</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/lingosnap-diary" target="_blank" rel="noreferrer">View repository</a>
+        </article>
+        <article class="project-card">
+          <div class="project-top">
+            <h3>pathfinding-astar-vs-dijkstra</h3>
+            <span class="project-badge badge-project">Project</span>
+          </div>
+          <p>Compact algorithm engineering project comparing A* and Dijkstra on benchmark maps, with reproducible runs, metrics, and an accompanying technical write-up.</p>
+          <div class="project-tags">
+            <span class="chip">Python</span>
+            <span class="chip">A*</span>
+            <span class="chip">Dijkstra</span>
+            <span class="chip">Benchmarking</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/pathfinding-astar-vs-dijkstra" target="_blank" rel="noreferrer">View repository</a>
+        </article>
       </div>
     </div>
-    <div class="edu-card reveal">
-      <div class="edu-degree">B.Sc. with Specialization in Computing Science</div>
-      <div class="edu-school">University of Alberta &bull; Apr 2025</div>
-      <div class="edu-courses">
-        <span>Key Courses</span>
-        Natural Language Processing &bull; Machine Learning &bull; Information Retrieval &bull; Search &amp; Planning in AI &bull; Reinforcement Learning &bull; Database Management
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- Contact -->
-<section id="contact" class="contact-section reveal">
-  <h2>Let's build<br>something <span class="highlight">together</span>.</h2>
-  <p>I'm actively looking for Summer / Fall 2026 internships and new grad roles in Canada. Open to Software Engineering, Robotics, Perception, and Data/ML opportunities.</p>
-  <div class="contact-links">
-    <a href="mailto:syin94@uwo.ca">&#9993; syin94@uwo.ca</a>
-    <a href="https://www.linkedin.com/in/jeremy-shi-yin-3a790437b/" target="_blank">LinkedIn &rarr;</a>
-    <a href="https://github.com/JYins" target="_blank">GitHub &rarr;</a>
-  </div>
-</section>
+  <section id="experience" class="experience">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">Experience</div>
+        <h2 class="section-title">Where the strongest signals come from.</h2>
+      </div>
+      <p class="section-note">The website leads with projects, but the experience section explains why those projects look the way they do.</p>
+    </div>
+    <div class="experience-grid">
+      <article class="experience-card">
+        <div class="experience-meta">Jan 2026-Present | London, ON</div>
+        <h3>Graduate Research Assistant</h3>
+        <p>University of Western Ontario, supervised by Dr. Fadi AlMahamid. Building reproducible PyTorch pipelines for V2V cooperative perception on V2V4Real, with evaluation using IoU, SSIM, and PSNR plus Optuna-tuned loss exploration on national HPC infrastructure.</p>
+        <div class="experience-tags">
+          <span class="chip">PyTorch</span>
+          <span class="chip">V2V4Real</span>
+          <span class="chip">Deep Generative Models</span>
+          <span class="chip">HPC</span>
+        </div>
+      </article>
+      <article class="experience-card">
+        <div class="experience-meta">Jun 2024-Aug 2024 | Beijing, China</div>
+        <h3>Algorithm / LLM Research Intern</h3>
+        <p>SmartEarth digital twin and geo-data team. Evaluated six retrieval configurations across 50+ domain documents, catalogued four classes of failure modes, and documented chunking, indexing, embedding, and reranking trade-offs for production decisions.</p>
+        <div class="experience-tags">
+          <span class="chip">RAG</span>
+          <span class="chip">LangChain</span>
+          <span class="chip">Vector Search</span>
+          <span class="chip">Evaluation</span>
+        </div>
+      </article>
+      <article class="experience-card">
+        <div class="experience-meta">Spring 2024 | Pathfinding project</div>
+        <h3>Pathfinding research project</h3>
+        <p>Benchmarked A* against Dijkstra on 30 grid-map instances, then wrote up the trade-off between heuristic overhead and search efficiency. A smaller project, but still a clean signal for algorithmic thinking.</p>
+        <div class="experience-tags">
+          <span class="chip">A*</span>
+          <span class="chip">Planning</span>
+          <span class="chip">Benchmarking</span>
+        </div>
+      </article>
+      <article class="experience-card">
+        <div class="experience-meta">Across projects</div>
+        <h3>Builder across backend and product software</h3>
+        <p>Outside research, I keep building end-to-end systems: Spring Boot plus MySQL workflows, Firebase-backed multiplayer and mobile experiences, and product prototypes where the backend shape matters as much as the UI polish.</p>
+        <div class="experience-tags">
+          <span class="chip">Backend</span>
+          <span class="chip">Firebase</span>
+          <span class="chip">MySQL</span>
+          <span class="chip">Product Engineering</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="skills" class="skills">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">Skills</div>
+        <h2 class="section-title">Tools I actually use in the work above.</h2>
+      </div>
+    </div>
+    <div class="skills-grid">
+      <article class="skill-card">
+        <h3>Languages</h3>
+        <div class="skill-list">
+          <span class="chip">Python</span>
+          <span class="chip">C++</span>
+          <span class="chip">SQL</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">Java</span>
+          <span class="chip">Swift</span>
+        </div>
+      </article>
+      <article class="skill-card">
+        <h3>ML and AI</h3>
+        <div class="skill-list">
+          <span class="chip">PyTorch</span>
+          <span class="chip">scikit-learn</span>
+          <span class="chip">RAG pipelines</span>
+          <span class="chip">FAISS</span>
+          <span class="chip">Retrieval evaluation</span>
+          <span class="chip">Optuna</span>
+        </div>
+      </article>
+      <article class="skill-card">
+        <h3>Backend and data</h3>
+        <div class="skill-list">
+          <span class="chip">FastAPI</span>
+          <span class="chip">Spring Boot</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">MySQL</span>
+          <span class="chip">Firebase</span>
+          <span class="chip">REST APIs</span>
+        </div>
+      </article>
+      <article class="skill-card">
+        <h3>Systems and workflow</h3>
+        <div class="skill-list">
+          <span class="chip">ROS2</span>
+          <span class="chip">Docker</span>
+          <span class="chip">GitHub Actions</span>
+          <span class="chip">Linux</span>
+          <span class="chip">HPC</span>
+          <span class="chip">Experiment tracking</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="education" class="education">
+    <div class="section-head">
+      <div>
+        <div class="section-kicker">Education</div>
+        <h2 class="section-title">Formal training behind the work.</h2>
+      </div>
+    </div>
+    <div class="education-grid">
+      <article class="education-card">
+        <div class="education-meta">Expected Aug 2026</div>
+        <h3>M.Eng. Electrical and Computer Engineering</h3>
+        <p>Western University, Robotics & Control. Coursework includes Autonomous Robotics, Robot Manipulators, Sensor Networks & Embedded Systems, and Linear Systems & Modern Control.</p>
+        <div class="edu-tags">
+          <span class="chip">Robotics</span>
+          <span class="chip">Control</span>
+          <span class="chip">Perception</span>
+        </div>
+      </article>
+      <article class="education-card">
+        <div class="education-meta">Apr 2025</div>
+        <h3>B.Sc. Specialization in Computing Science</h3>
+        <p>University of Alberta. Coursework includes Natural Language Processing, Machine Learning, Information Retrieval, Search & Planning in AI, and Database Management.</p>
+        <div class="edu-tags">
+          <span class="chip">NLP</span>
+          <span class="chip">Machine Learning</span>
+          <span class="chip">Information Retrieval</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="contact-card glass-card">
+      <div class="contact-copy">
+        <div class="section-kicker">Contact</div>
+        <h2 class="section-title">Open to work that needs both research discipline and engineering discipline.</h2>
+        <p>If you are hiring for Software Engineering, Robotics, Perception, or Data/ML roles in Canada, I would be glad to connect. The best public contact for me is Gmail, and the GitHub plus LinkedIn links below stay current.</p>
+      </div>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:yshi54188@gmail.com">
+          <strong>Email</strong>
+          <span>yshi54188@gmail.com</span>
+        </a>
+        <a class="contact-link" href="https://github.com/JYins" target="_blank" rel="noreferrer">
+          <strong>GitHub</strong>
+          <span>github.com/JYins</span>
+        </a>
+        <a class="contact-link" href="https://www.linkedin.com/in/jeremy-shi-yin-3a790437b/" target="_blank" rel="noreferrer">
+          <strong>LinkedIn</strong>
+          <span>jeremy-shi-yin</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
 
 <footer>
-  <p>&copy; 2026 Jeremy (Shi) Yin. Built with care.</p>
+  Built to reflect the current story honestly: perception first, evaluation second, product work to prove breadth.
 </footer>
-
-<script>
-// Scroll reveal
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 80);
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 });
-reveals.forEach(el => observer.observe(el));
-
-// Nav scroll effect
-const nav = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 50);
-});
-
-// Smooth anchor scroll
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
-  });
-});
-</script>
-
 </body>
 </html>
-
-
