@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jeremy Yin | Robotics, Perception, and AI Systems</title>
-<meta name="description" content="Jeremy Yin builds robotics and perception systems, evaluates RAG pipelines rigorously, and ships practical backend and product software.">
+<title>Jeremy Yin | Software Engineer - ML Pipelines, RAG Evaluation, and Perception</title>
+<meta name="description" content="Jeremy Yin is a software engineer focused on ML pipelines, RAG evaluation, backend systems, and perception projects.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -252,7 +252,7 @@ section {
 
 .trajectory-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -312,7 +312,7 @@ section {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -468,8 +468,6 @@ footer {
     grid-template-columns: 1fr 1fr;
   }
 
-  .trajectory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .contact-card { grid-template-columns: 1fr; }
 }
 
@@ -511,11 +509,12 @@ footer {
 <main id="top">
   <section class="hero">
     <div class="hero-copy">
-      <div class="eyebrow">Robotics, Perception, and AI Systems</div>
-      <h1>Building systems that <span>see</span>, evaluate, and ship.</h1>
+      <div class="eyebrow">Software Engineer | ML Pipelines | RAG Evaluation | Perception</div>
+      <h1>Software engineer building <span>ML systems</span> that are easy to trust.</h1>
       <p>I'm Jeremy Yin, an M.Eng. Robotics & Control student at Western University with a computing background from the University of Alberta.</p>
-      <p class="lead">My strongest line is robotics perception: V2V LiDAR, BEV reconstruction, reproducible PyTorch pipelines, and evaluation that I can actually trust. Around that, I build RAG evaluation tooling, backend systems, and product software that makes the engineering legible.</p>
-      <p class="lead">Looking for Summer/Fall 2026 internships and new grad roles in Software Engineering, Robotics, Perception, or Data/ML in Canada.</p>
+      <p class="lead">My main lane is software engineering: backend systems, ML pipelines, evaluation-heavy AI tooling, and projects that are straightforward to run, measure, and explain.</p>
+      <p class="lead">Most of that shows up in RAG evaluation, API and database work, and product builds. Perception and ROS2 are important parts of my work too, but they sit behind the software engineer core.</p>
+      <p class="lead">Looking for Fall 2026 internships, co-op, or new grad roles in Software Engineering, ML platform, Data/ML, or related backend roles in Canada.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="mailto:yshi54188@gmail.com">Email me</a>
         <a class="btn btn-secondary" href="https://github.com/JYins" target="_blank" rel="noreferrer">GitHub</a>
@@ -523,19 +522,19 @@ footer {
       </div>
     </div>
     <aside class="hero-panel">
-      <h2>Current image</h2>
+      <h2>At a glance</h2>
       <div class="hero-list">
         <div class="hero-item">
-          <strong>Perception research</strong>
-          <span>V2V cooperative perception, occluded BEV reconstruction, LiDAR preprocessing, metrics, and HPC training.</span>
+          <strong>Software engineering</strong>
+          <span>Backend APIs, data models, full-stack systems, and product builds that are practical to run and demo.</span>
         </div>
         <div class="hero-item">
-          <strong>Evaluation-minded AI</strong>
-          <span>SmartEarth internship lessons turned into retrieval benchmarking and then application-layer memory systems.</span>
+          <strong>ML pipelines and RAG evaluation</strong>
+          <span>Retrieval benchmarking, config-driven experiments, metrics, failure-case analysis, and tooling that supports real iteration.</span>
         </div>
         <div class="hero-item">
-          <strong>Software that ships</strong>
-          <span>Spring Boot backend work, real-time game systems, and shipped iOS/Firebase app work.</span>
+          <strong>Perception and ROS2</strong>
+          <span>V2V LiDAR research, BEV reconstruction, and an in-progress ROS2 perception demo for playback, projection, detection, and visualization.</span>
         </div>
       </div>
     </aside>
@@ -545,9 +544,9 @@ footer {
     <div class="section-head">
       <div>
         <div class="section-kicker">Trajectory</div>
-        <h2 class="section-title">A timeline that connects the research and product work.</h2>
+        <h2 class="section-title">How the software, ML, and perception mix happened.</h2>
       </div>
-      <p class="section-note">The throughline is not random project hopping. It is one arc: measure systems honestly, understand failure modes, and then build stronger applications on top of that.</p>
+      <p class="section-note">The order matters: software engineering first, ML evaluation next, and perception work growing on top of that base.</p>
     </div>
     <div class="trajectory-grid">
       <article class="glass-card">
@@ -561,12 +560,17 @@ footer {
         <p>Turned internship lessons into a reusable evaluation framework for chunking, embeddings, sparse/dense/hybrid retrieval, and failure-case analysis.</p>
       </article>
       <article class="glass-card">
+        <div class="timeline-date">2025, in progress</div>
+        <h3>ROS2LiDAR</h3>
+        <p>Started learning ROS2, C++, Python, and Docker through a LiDAR perception demo with playback, BEV projection, detection, RViz2, logging, and profiling goals.</p>
+      </article>
+      <article class="glass-card">
         <div class="timeline-date">Jan 2026-Present</div>
         <h3>Western V2V research</h3>
         <p>Built reproducible PyTorch pipelines for cooperative perception on V2V4Real, focusing on occlusion reconstruction, masked occupancy metrics, and fair model comparison.</p>
       </article>
       <article class="glass-card">
-        <div class="timeline-date">Current, unshipped</div>
+        <div class="timeline-date">Current, in progress</div>
         <h3>coval</h3>
         <p>Applying retrieval and memory design to a product-shaped backend for context-rich conversations, with ingestion, person-centric storage, and grounded context assembly.</p>
       </article>
@@ -577,9 +581,9 @@ footer {
     <div class="section-head">
       <div>
         <div class="section-kicker">Featured Work</div>
-        <h2 class="section-title">Current focus, then selected built work.</h2>
+        <h2 class="section-title">Current work first, then the rest of the stack.</h2>
       </div>
-      <p class="section-note">I want the first read to be accurate: perception research first, evaluation-heavy AI systems second, then broader product and backend work that proves range.</p>
+      <p class="section-note">This page should read clearly for hiring: software engineering and ML systems first, with perception depth and shipped side projects supporting that story.</p>
     </div>
 
     <div class="project-group">
@@ -587,25 +591,10 @@ footer {
       <div class="projects-grid">
         <article class="project-card">
           <div class="project-top">
-            <h3>uwo-v2v-bev-reconstruction</h3>
-            <span class="project-badge badge-research">Research</span>
-          </div>
-          <p>M.Eng. research workspace for V2V cooperative perception: aligned LiDAR-to-BEV inputs, masked-sector reconstruction, metric-driven experiments, and HPC-ready training flows.</p>
-          <div class="project-tags">
-            <span class="chip">Python</span>
-            <span class="chip">PyTorch</span>
-            <span class="chip">LiDAR</span>
-            <span class="chip">BEV</span>
-            <span class="chip">HPC</span>
-          </div>
-          <a class="project-link" href="https://github.com/JYins/uwo-v2v-bev-reconstruction" target="_blank" rel="noreferrer">View repository</a>
-        </article>
-        <article class="project-card">
-          <div class="project-top">
             <h3>rag-eval-pipeline</h3>
             <span class="project-badge badge-progress">In Progress</span>
           </div>
-          <p>Retrieval evaluation framework comparing chunking strategies, embeddings, and retrieval modes with Recall@K, MRR, dashboard views, CI, and failure-case inspection.</p>
+          <p>Evaluation framework for chunking, embeddings, sparse and dense retrieval, regression checks, and retrieval failure analysis.</p>
           <div class="project-tags">
             <span class="chip">Python</span>
             <span class="chip">FAISS</span>
@@ -618,9 +607,9 @@ footer {
         <article class="project-card">
           <div class="project-top">
             <h3>coval</h3>
-            <span class="project-badge badge-unshipped">Unshipped</span>
+            <span class="project-badge badge-progress">In Progress</span>
           </div>
-          <p>AI relationship memory backend with FastAPI, PostgreSQL, and person-centric memory design. Early-stage, but intentionally grounded in retrieval lessons from prior evaluation work.</p>
+          <p>In-progress AI memory backend with FastAPI, PostgreSQL, and person-centric context design, built on lessons from retrieval evaluation.</p>
           <div class="project-tags">
             <span class="chip">FastAPI</span>
             <span class="chip">PostgreSQL</span>
@@ -629,6 +618,36 @@ footer {
             <span class="chip">Auth</span>
           </div>
           <a class="project-link" href="https://github.com/JYins/coval" target="_blank" rel="noreferrer">View repository</a>
+        </article>
+        <article class="project-card">
+          <div class="project-top">
+            <h3>uwo-v2v-bev-reconstruction</h3>
+            <span class="project-badge badge-research">Research</span>
+          </div>
+          <p>PyTorch research workspace for cooperative perception, BEV reconstruction, metric-driven experiments, and HPC training flows.</p>
+          <div class="project-tags">
+            <span class="chip">Python</span>
+            <span class="chip">PyTorch</span>
+            <span class="chip">LiDAR</span>
+            <span class="chip">BEV</span>
+            <span class="chip">HPC</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/uwo-v2v-bev-reconstruction" target="_blank" rel="noreferrer">View repository</a>
+        </article>
+        <article class="project-card">
+          <div class="project-top">
+            <h3>ROS2LiDAR</h3>
+            <span class="project-badge badge-progress">In Progress</span>
+          </div>
+          <p>ROS2 LiDAR perception demo with playback, BEV projection, object detection, RViz2 visualization, Docker, logging, and latency profiling goals.</p>
+          <div class="project-tags">
+            <span class="chip">ROS2</span>
+            <span class="chip">C++</span>
+            <span class="chip">Python</span>
+            <span class="chip">Docker</span>
+            <span class="chip">RViz2</span>
+          </div>
+          <a class="project-link" href="https://github.com/JYins/ROS2LiDAR" target="_blank" rel="noreferrer">View repository</a>
         </article>
       </div>
     </div>
@@ -716,7 +735,7 @@ footer {
         <div class="section-kicker">Experience</div>
         <h2 class="section-title">Where the strongest signals come from.</h2>
       </div>
-      <p class="section-note">The website leads with projects, but the experience section explains why those projects look the way they do.</p>
+      <p class="section-note">The job titles are short; the underlying signals are software, ML tooling, and then perception depth.</p>
     </div>
     <div class="experience-grid">
       <article class="experience-card">
@@ -752,13 +771,13 @@ footer {
         </div>
       </article>
       <article class="experience-card">
-        <div class="experience-meta">Across projects</div>
-        <h3>Builder across backend and product software</h3>
-        <p>Outside research, I keep building end-to-end systems: Spring Boot plus MySQL workflows, Firebase-backed multiplayer and mobile experiences, and product prototypes where the backend shape matters as much as the UI polish.</p>
+        <div class="experience-meta">2025-Present | Independent software projects</div>
+        <h3>Backend, app, and systems builder</h3>
+        <p>Built Spring Boot and FastAPI backends, Firebase-backed real-time and mobile projects, and smaller systems that make the software engineering side of my work easy to see.</p>
         <div class="experience-tags">
-          <span class="chip">Backend</span>
+          <span class="chip">Backend APIs</span>
+          <span class="chip">Databases</span>
           <span class="chip">Firebase</span>
-          <span class="chip">MySQL</span>
           <span class="chip">Product Engineering</span>
         </div>
       </article>
@@ -769,7 +788,7 @@ footer {
     <div class="section-head">
       <div>
         <div class="section-kicker">Skills</div>
-        <h2 class="section-title">Tools I actually use in the work above.</h2>
+        <h2 class="section-title">Keywords that match the work and are easy to scan.</h2>
       </div>
     </div>
     <div class="skills-grid">
@@ -777,44 +796,61 @@ footer {
         <h3>Languages</h3>
         <div class="skill-list">
           <span class="chip">Python</span>
+          <span class="chip">TypeScript</span>
           <span class="chip">C++</span>
           <span class="chip">SQL</span>
-          <span class="chip">TypeScript</span>
           <span class="chip">Java</span>
           <span class="chip">Swift</span>
         </div>
       </article>
       <article class="skill-card">
-        <h3>ML and AI</h3>
+        <h3>ML pipelines and evaluation</h3>
         <div class="skill-list">
           <span class="chip">PyTorch</span>
           <span class="chip">scikit-learn</span>
-          <span class="chip">RAG pipelines</span>
+          <span class="chip">RAG evaluation</span>
           <span class="chip">FAISS</span>
+          <span class="chip">ChromaDB</span>
+          <span class="chip">Qdrant</span>
           <span class="chip">Retrieval evaluation</span>
           <span class="chip">Optuna</span>
+          <span class="chip">Streamlit</span>
+          <span class="chip">pytest</span>
         </div>
       </article>
       <article class="skill-card">
-        <h3>Backend and data</h3>
+        <h3>Backend and APIs</h3>
         <div class="skill-list">
           <span class="chip">FastAPI</span>
           <span class="chip">Spring Boot</span>
+          <span class="chip">REST APIs</span>
+          <span class="chip">Authentication</span>
           <span class="chip">PostgreSQL</span>
           <span class="chip">MySQL</span>
           <span class="chip">Firebase</span>
-          <span class="chip">REST APIs</span>
         </div>
       </article>
       <article class="skill-card">
-        <h3>Systems and workflow</h3>
+        <h3>Frontend and app</h3>
+        <div class="skill-list">
+          <span class="chip">React</span>
+          <span class="chip">Next.js</span>
+          <span class="chip">Vue</span>
+          <span class="chip">SwiftUI</span>
+          <span class="chip">WidgetKit</span>
+          <span class="chip">Vercel</span>
+        </div>
+      </article>
+      <article class="skill-card">
+        <h3>Systems and robotics</h3>
         <div class="skill-list">
           <span class="chip">ROS2</span>
           <span class="chip">Docker</span>
-          <span class="chip">GitHub Actions</span>
           <span class="chip">Linux</span>
+          <span class="chip">GitHub Actions</span>
           <span class="chip">HPC</span>
-          <span class="chip">Experiment tracking</span>
+          <span class="chip">RViz2</span>
+          <span class="chip">LiDAR</span>
         </div>
       </article>
     </div>
@@ -855,8 +891,8 @@ footer {
     <div class="contact-card glass-card">
       <div class="contact-copy">
         <div class="section-kicker">Contact</div>
-        <h2 class="section-title">Open to work that needs both research discipline and engineering discipline.</h2>
-        <p>If you are hiring for Software Engineering, Robotics, Perception, or Data/ML roles in Canada, I would be glad to connect. The best public contact for me is Gmail, and the GitHub plus LinkedIn links below stay current.</p>
+        <h2 class="section-title">Looking for Fall 2026 internships, co-op, or new grad roles.</h2>
+        <p>Best fit: Software Engineering, ML platform, Data/ML, or backend-heavy roles in Canada. Perception and robotics are part of my profile too, but the clearest public story is still software engineer first.</p>
       </div>
       <div class="contact-links">
         <a class="contact-link" href="mailto:yshi54188@gmail.com">
@@ -877,7 +913,7 @@ footer {
 </main>
 
 <footer>
-  Built to reflect the current story honestly: perception first, evaluation second, product work to prove breadth.
+  Software engineer first, then ML systems, then perception work where it adds real depth.
 </footer>
 </body>
 </html>
